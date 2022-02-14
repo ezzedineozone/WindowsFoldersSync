@@ -13,11 +13,11 @@ namespace WpfApp1
         {
             slots = new List<SaveSlot>();
         }
-        public void AddSlot(string source, string destination)
+        public void AddSlot(SaveSlot saveSlot)
         {
             int x = slots.Count + 1;
             string order = x.ToString();
-            var saveSlot = new SaveSlot(source, destination, order); ;
+            saveSlot.Order = order;
             slots.Add(saveSlot);
         }
     }

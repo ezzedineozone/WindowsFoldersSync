@@ -8,14 +8,8 @@ namespace WpfApp1
 {
     internal class SaveSlot
     {
-        public string Source;
-        public string Destination;
-        public string Order;
-        public SaveSlot(string src, string dst, string ordr)
-        {
-            this.Source = src;
-            this.Destination = dst;
-            this.Order = ordr;
-        }
+        public string Source { get; set; }
+        public string Destination { get; set; }
+        public string Order { get; set; }
     }
 }

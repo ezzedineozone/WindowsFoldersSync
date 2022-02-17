@@ -32,7 +32,7 @@
         <TextBox x:Name="sourceBox" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" Height="40" Margin="0,0,0,0" MaxWidth="342.77"/>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Destination (backups) folder:" FontFamily="Verdana" Margin="0,20,0,20"/>
         <TextBox x:Name="destinationBox" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4" Height="40" Margin="0,0,0,0" MaxWidth="342.77" />
-        <Button x:Name="submitButton" Grid.Column="1" Grid.Row="5" Content="Save" Margin="40,40,80,30" Click="submitButton_Click" />
+        <Button x:Name="submitButton" Grid.Column="1" Grid.Row="5" Content="Add" Margin="40,40,80,30" Click="submitButton_Click" />
         <Border BorderBrush="LightGray" BorderThickness="3" Margin="10,10,0,10" Grid.Column="5" Grid.Row="1" Grid.RowSpan="5">
             <ScrollViewer x:Name="saveSlotViewer">
             </ScrollViewer>

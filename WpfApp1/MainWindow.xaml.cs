@@ -75,7 +75,7 @@ namespace WpfApp1
                 {
                     MessageBox.Show("Slot was deleted");
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
-                    Refresh();
+                    ///Refresh();
                     submitButton.Click += submitButton_Click;
                     submitButton.Click -= SaveChanges;
                     submitButton.Content = "Add";
@@ -93,7 +93,7 @@ namespace WpfApp1
                 var saveSlot = new SaveSlot() { Destination = destinationBox.Text.ToString(), Source = sourceBox.Text.ToString(), Order = tempBtn.Content.ToString() };
                 backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
                 backupScript.slots.Insert(Convert.ToInt32(tempBtn.Content) - 1, saveSlot);
-                Refresh();
+                ///Refresh();
             }
             
         }

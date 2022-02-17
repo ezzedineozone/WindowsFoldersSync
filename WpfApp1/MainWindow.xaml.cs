@@ -50,7 +50,6 @@ namespace WpfApp1
                 grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
                 Grid.SetRow(button, grid.RowDefinitions.Count - 1);
                 saveSlotViewer.Content = grid;
-                var comboBox = new ComboBox();
 
             }
 

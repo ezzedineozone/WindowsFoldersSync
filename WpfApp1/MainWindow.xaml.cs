@@ -39,17 +39,25 @@ namespace WpfApp1
             }
             else
             {
-                submitButton.Content = "Add";
-                var saveSlot = new SaveSlot() { Source = sourceBox.Text, Destination = destinationBox.Text };
-                backupScript.AddSlot(saveSlot);
-                var button = new Button();
-                var order = backupScript.slots[backupScript.slots.Count - 1].Order;
-                button.Content = order.ToString();
-                button.Click += ReplaceTextBoxContent;
-                grid.Children.Add(button);
-                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
-                Grid.SetRow(button, grid.RowDefinitions.Count - 1);
-                saveSlotViewer.Content = grid;
+                if(CheckIfEligible(destinationBox.Text))
+                {
+                    submitButton.Content = "Add";
+                    var saveSlot = new SaveSlot() { Source = sourceBox.Text, Destination = destinationBox.Text };
+                    backupScript.AddSlot(saveSlot);
+                    var button = new Button();
+                    var order = backupScript.slots[backupScript.slots.Count - 1].Order;
+                    button.Content = order.ToString();
+                    button.Click += ReplaceTextBoxContent;
+                    grid.Children.Add(button);
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
+                    Grid.SetRow(button, grid.RowDefinitions.Count - 1);
+                    saveSlotViewer.Content = grid;
+                }
+                else
+                {
+                    destinationBox.Text = "enter a different destination";
+                    MessageBox.Show("Destination already exists in one of the saveslots");
+                }
 
             }
 
@@ -74,14 +82,20 @@ namespace WpfApp1
                 {
                     MessageBox.Show("Slot was deleted");
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
-                    ///Refresh();
+                    Refresh();
+                    sourceBox.Text = tempSaveSlot.Source;
+                    destinationBox.Text = tempSaveSlot.Destination;
                     submitButton.Click += submitButton_Click;
                     submitButton.Click -= SaveChanges;
                     submitButton.Content = "Add";
                 }
                 else
                 {
+                    submitButton.Click -= submitButton_Click;
+                    sourceBox.Text = tempSaveSlot.Source;
+                    destinationBox.Text = tempSaveSlot.Destination;
                     MessageBox.Show("Please enter both a source and a destination folder");
+                    submitButton.Click += submitButton_Click;
                 }
             }
             else
@@ -92,25 +106,41 @@ namespace WpfApp1
                 var saveSlot = new SaveSlot() { Destination = destinationBox.Text.ToString(), Source = sourceBox.Text.ToString(), Order = tempBtn.Content.ToString() };
                 backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
                 backupScript.slots.Insert(Convert.ToInt32(tempBtn.Content) - 1, saveSlot);
-                ///Refresh();
+                Refresh();
             }
             
         }
-        // work in progress refresh method to refresh the buttons after one was deleted
-        //private void Refresh()
-        //{
-        //    grid = new Grid();
-        //    foreach(SaveSlot slot in backupScript.slots)
-        //    {
-        //        slot.Order = backupScript.slots.Find(<SaveSlot> SaveSlot)
-        //        var rowDef = new RowDefinition() { Height = new GridLength(40) };
-        //        grid.RowDefinitions.Add(rowDef);
-        //        var btn = new Button();
-        //        btn.Content = slot.Order;
-        //        grid.Children.Add(btn);
-        //        Grid.SetRow(btn, Convert.ToInt32(slot.Order));
-        //        saveSlotViewer.Content = grid;
-        //    }
+        private void Refresh()
+        {
+            var updatedList = new List<SaveSlot>();
+            foreach(var slot in backupScript.slots)
+            {
+                slot.Order = (updatedList.Count + 1).ToString();
+                updatedList.Add(slot);
+            }
+            backupScript.slots = updatedList;
+            grid = new Grid();
+            foreach(var slot in backupScript.slots)
+            {
+                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
+                var btn = new Button() { Content = slot.Order};
+                btn.Click += ReplaceTextBoxContent;
+                grid.Children.Add(btn);
+                Grid.SetRow(btn, grid.RowDefinitions.Count - 1);
+            }
+            saveSlotViewer.Content = grid;
+        }
+        private bool CheckIfEligible(string destination)
+        {
+            bool eligible = true;
+            foreach (var slot in backupScript.slots)
+            {
+                if(slot.Destination == destination )
+                {
+                    eligible = false;
+                }
+            }
+            return eligible;
         }
     }
 }

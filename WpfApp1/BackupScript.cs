@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     internal class BackupScript
     {
-        public readonly List<SaveSlot> slots;
+        public List<SaveSlot> slots;
         public BackupScript()
         {
             slots = new List<SaveSlot>();

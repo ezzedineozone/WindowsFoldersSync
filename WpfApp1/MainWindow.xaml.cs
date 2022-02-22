@@ -30,10 +30,11 @@ namespace WpfApp1
             backupScript = new BackupScript();
             grid = new Grid();
             InitializeComponent();
+            beginBackup.Click += backupScript.BeginBackup;
         }
         private void submitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sourceBox.Text == " " || destinationBox.Text == " ")
+            if (sourceBox.Text == "" || destinationBox.Text == "")
             {
                 MessageBox.Show("Please enter both a source and a destination folder");
             }
@@ -55,8 +56,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    destinationBox.Text = "enter a different destination";
-                    MessageBox.Show("Destination already exists in one of the saveslots");
+                    MessageBox.Show("destination already exists in one of the save slots");
                 }
 
             }
@@ -91,22 +91,33 @@ namespace WpfApp1
                 }
                 else
                 {
-                    submitButton.Click -= submitButton_Click;
                     sourceBox.Text = tempSaveSlot.Source;
                     destinationBox.Text = tempSaveSlot.Destination;
                     MessageBox.Show("Please enter both a source and a destination folder");
-                    submitButton.Click += submitButton_Click;
                 }
             }
             else
             {
-                submitButton.Click += submitButton_Click;
-                submitButton.Click -= SaveChanges;
-                submitButton.Content = "Add";
-                var saveSlot = new SaveSlot() { Destination = destinationBox.Text.ToString(), Source = sourceBox.Text.ToString(), Order = tempBtn.Content.ToString() };
-                backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
-                backupScript.slots.Insert(Convert.ToInt32(tempBtn.Content) - 1, saveSlot);
-                Refresh();
+                if(CheckIfEligible(destinationBox.Text))
+                {
+                    submitButton.Content = "Add";
+                    var saveSlot = new SaveSlot() { Destination = destinationBox.Text.ToString(), Source = sourceBox.Text.ToString(), Order = tempBtn.Content.ToString() };
+                    backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
+                    backupScript.slots.Insert(Convert.ToInt32(tempBtn.Content) - 1, saveSlot);
+                    Refresh();
+                    sourceBox.Text = "";
+                    destinationBox.Text = "";
+                    submitButton.Click += submitButton_Click;
+                    submitButton.Click -= SaveChanges;
+                    submitButton.Content = "Add";
+                }
+                else
+                {
+                    MessageBox.Show("Destination already exists in one of the save slots");
+                    submitButton.Content = "Add";
+
+                }
+
             }
             
         }
@@ -135,9 +146,12 @@ namespace WpfApp1
             bool eligible = true;
             foreach (var slot in backupScript.slots)
             {
-                if(slot.Destination == destination )
+                if(slot != tempSaveSlot)
                 {
-                    eligible = false;
+                    if (slot.Destination == destination)
+                    {
+                        eligible = false;
+                    }
                 }
             }
             return eligible;

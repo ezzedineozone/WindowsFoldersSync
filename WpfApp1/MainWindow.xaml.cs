@@ -23,10 +23,12 @@ namespace WpfApp1
     {
         Grid grid;
         readonly BackupScript backupScript;
-        SaveSlot? tempSaveSlot;
-        Button? tempBtn;
+        SaveSlot tempSaveSlot;
+        Button tempBtn;
         public MainWindow()
         {
+            tempBtn = new Button();
+            tempSaveSlot = new SaveSlot();
             backupScript = new BackupScript();
             grid = new Grid();
             InitializeComponent();

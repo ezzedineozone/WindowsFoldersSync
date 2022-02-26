@@ -10,6 +10,7 @@ namespace WpfApp1
 {
     internal class BackupScript
     {
+        public event EventHandler<string> BackupInitiatedEvent;
         public List<SaveSlot> slots;
         public BackupScript()
         {
@@ -24,15 +25,18 @@ namespace WpfApp1
         }
         public void BeginBackup(object sender, RoutedEventArgs e)
         {
+            DateTime dateTime = DateTime.Now;
+            var formattedTime = dateTime.ToString().Split(' ')[0];
+            BackupInitiatedEvent?.Invoke(this, formattedTime);
+
             foreach (var slot in slots)
             {
-                
                 var source = slot.Source;
                 var destination = slot.Destination;
                 if(Directory.Exists(source) && Directory.Exists(destination))
                 {
+                    Directory.Delete(destination, true);
                     var directories = GetDirectories(source);
-                    directories.Add(slot.Source);
                     var files = GetFiles(directories);
                     foreach (var dir in directories)
                     {

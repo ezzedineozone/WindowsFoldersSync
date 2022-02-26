@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -24,21 +26,30 @@ namespace WpfApp1
         Grid grid;
         readonly BackupScript backupScript;
         SaveSlot tempSaveSlot;
-        Button tempBtn;
+        System.Windows.Controls.Button tempBtn;
+        FolderBrowserDialog folderBrowserDialog;
         public MainWindow()
         {
-            tempBtn = new Button();
+            folderBrowserDialog = new FolderBrowserDialog();
+            tempBtn = new System.Windows.Controls.Button();
             tempSaveSlot = new SaveSlot();
             backupScript = new BackupScript();
             grid = new Grid();
             InitializeComponent();
             beginBackup.Click += backupScript.BeginBackup;
+            backupScript.BackupInitiatedEvent += BackupScript_BackupInitiatedEvent;
         }
+
+        private void BackupScript_BackupInitiatedEvent(object? sender, string e)
+        {
+            lastBackup.Text = e;
+        }
+
         private void submitButton_Click(object sender, RoutedEventArgs e)
         {
             if (sourceBox.Text == "" || destinationBox.Text == "")
             {
-                MessageBox.Show("Please enter both a source and a destination folder");
+                System.Windows.MessageBox.Show("Please enter both a source and a destination folder");
             }
             else
             {
@@ -47,7 +58,7 @@ namespace WpfApp1
                     submitButton.Content = "Add";
                     var saveSlot = new SaveSlot() { Source = sourceBox.Text, Destination = destinationBox.Text };
                     backupScript.AddSlot(saveSlot);
-                    var button = new Button();
+                    var button = new System.Windows.Controls.Button();
                     var order = backupScript.slots[backupScript.slots.Count - 1].Order;
                     button.Content = order.ToString();
                     button.Click += ReplaceTextBoxContent;
@@ -58,7 +69,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show("destination already exists in one of the save slots");
+                    System.Windows.MessageBox.Show("destination already exists in one of the save slots");
                 }
 
             }
@@ -67,7 +78,7 @@ namespace WpfApp1
 
         private void ReplaceTextBoxContent(object sender, RoutedEventArgs e)
         {
-            tempBtn = (Button)sender;
+            tempBtn = (System.Windows.Controls.Button)sender;
             int order = Convert.ToInt32(tempBtn.Content) - 1;
             tempSaveSlot = backupScript.slots[order];
             sourceBox.Text = tempSaveSlot.Source;
@@ -82,7 +93,7 @@ namespace WpfApp1
             {
                 if(sourceBox.Text == "" && destinationBox.Text == "" )
                 {
-                    MessageBox.Show("Slot was deleted");
+                    System.Windows.MessageBox.Show("Slot was deleted");
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
                     Refresh();
                     sourceBox.Text = tempSaveSlot.Source;
@@ -95,7 +106,7 @@ namespace WpfApp1
                 {
                     sourceBox.Text = tempSaveSlot.Source;
                     destinationBox.Text = tempSaveSlot.Destination;
-                    MessageBox.Show("Please enter both a source and a destination folder");
+                    System.Windows.MessageBox.Show("Please enter both a source and a destination folder");
                 }
             }
             else
@@ -115,7 +126,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show("Destination already exists in one of the save slots");
+                    System.Windows.MessageBox.Show("Destination already exists in one of the save slots");
                     submitButton.Content = "Add";
 
                 }
@@ -136,7 +147,7 @@ namespace WpfApp1
             foreach(var slot in backupScript.slots)
             {
                 grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
-                var btn = new Button() { Content = slot.Order};
+                var btn = new System.Windows.Controls.Button() { Content = slot.Order};
                 btn.Click += ReplaceTextBoxContent;
                 grid.Children.Add(btn);
                 Grid.SetRow(btn, grid.RowDefinitions.Count - 1);
@@ -157,6 +168,27 @@ namespace WpfApp1
                 }
             }
             return eligible;
+        }
+        private void ShowBrowser(object sender, RoutedEventArgs e)
+        {
+            folderBrowserDialog.ShowDialog();
+            var selectedPath = folderBrowserDialog.SelectedPath;
+            var btn = (System.Windows.Controls.Button)sender;
+            if(btn.Name == "sourceBrowser")
+            {
+                sourceBox.Text = selectedPath ;
+            }
+            else
+            {
+                if (Directory.GetDirectories(selectedPath) == null && Directory.GetFiles(selectedPath) == null )
+                {
+                    destinationBox.Text = folderBrowserDialog.SelectedPath;
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Your destination folder is not empty, please select an empty folder");
+                }
+            }
         }
     }
 }

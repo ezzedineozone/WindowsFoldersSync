@@ -10,7 +10,7 @@ namespace WpfApp1
 {
     internal class BackupScript
     {
-        public event EventHandler<string> BackupInitiatedEvent;
+        public event EventHandler<string>? BackupInitiatedEvent;
         public List<SaveSlot> slots;
         public BackupScript()
         {
@@ -23,12 +23,11 @@ namespace WpfApp1
             saveSlot.Order = order;
             slots.Add(saveSlot);
         }
-        public void BeginBackup(object sender, RoutedEventArgs e)
+        public void BeginBackup()
         {
             DateTime dateTime = DateTime.Now;
             var formattedTime = dateTime.ToString().Split(' ')[0];
             BackupInitiatedEvent?.Invoke(this, formattedTime);
-
             foreach (var slot in slots)
             {
                 var source = slot.Source;

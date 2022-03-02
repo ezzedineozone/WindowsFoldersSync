@@ -11,6 +11,5 @@ namespace WpfApp1
         public string Source { get; set; }
         public string Destination { get; set; }
         public string Order { get; set; }
-        public string LastBackup { get; set; }
     }
 }

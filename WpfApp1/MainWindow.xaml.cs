@@ -30,13 +30,18 @@ namespace WpfApp1
         FolderBrowserDialog folderBrowserDialog;
         public MainWindow()
         {
+            InitializeComponent();
             folderBrowserDialog = new FolderBrowserDialog();
             tempBtn = new System.Windows.Controls.Button();
             tempSaveSlot = new SaveSlot();
             backupScript = new BackupScript();
             grid = new Grid();
-            InitializeComponent();
-            beginBackup.Click += backupScript.BeginBackup;
+            backupScript.slots = SqlLiteDataAccess.GetSaveSlots();
+            RefreshDB();
+            if(backupScript.slots.Count != 0)
+            {
+                Refresh();
+            }
             backupScript.BackupInitiatedEvent += BackupScript_BackupInitiatedEvent;
         }
 
@@ -66,6 +71,7 @@ namespace WpfApp1
                     grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40) });
                     Grid.SetRow(button, grid.RowDefinitions.Count - 1);
                     saveSlotViewer.Content = grid;
+                    RefreshDB();
                 }
                 else
                 {
@@ -83,7 +89,7 @@ namespace WpfApp1
             tempSaveSlot = backupScript.slots[order];
             sourceBox.Text = tempSaveSlot.Source;
             destinationBox.Text = tempSaveSlot.Destination;
-            submitButton.Content = "save";
+            submitButton.Content = "Save";
             submitButton.Click -= submitButton_Click;
             submitButton.Click += SaveChanges;
         }
@@ -95,12 +101,13 @@ namespace WpfApp1
                 {
                     System.Windows.MessageBox.Show("Slot was deleted");
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
-                    Refresh();
                     sourceBox.Text = tempSaveSlot.Source;
                     destinationBox.Text = tempSaveSlot.Destination;
                     submitButton.Click += submitButton_Click;
                     submitButton.Click -= SaveChanges;
                     submitButton.Content = "Add";
+                    RefreshDB();
+                    Refresh();
                 }
                 else
                 {
@@ -117,12 +124,13 @@ namespace WpfApp1
                     var saveSlot = new SaveSlot() { Destination = destinationBox.Text.ToString(), Source = sourceBox.Text.ToString(), Order = tempBtn.Content.ToString() };
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
                     backupScript.slots.Insert(Convert.ToInt32(tempBtn.Content) - 1, saveSlot);
-                    Refresh();
                     sourceBox.Text = "";
                     destinationBox.Text = "";
                     submitButton.Click += submitButton_Click;
                     submitButton.Click -= SaveChanges;
                     submitButton.Content = "Add";
+                    Refresh();
+                    RefreshDB();
                 }
                 else
                 {
@@ -180,7 +188,7 @@ namespace WpfApp1
             }
             else
             {
-                if (Directory.GetDirectories(selectedPath) == null && Directory.GetFiles(selectedPath) == null )
+                if (Directory.GetDirectories(selectedPath).Count() == 0 && Directory.GetFiles(selectedPath).Count() == 0 )
                 {
                     destinationBox.Text = folderBrowserDialog.SelectedPath;
                 }
@@ -189,6 +197,30 @@ namespace WpfApp1
                     System.Windows.MessageBox.Show("Your destination folder is not empty, please select an empty folder");
                 }
             }
+        }
+        private void RefreshDB()
+        {
+            ///code makes sure that The sqlite database is uptodate with the programs backupscript.slots
+            SqlLiteDataAccess.DeleteTable();
+            foreach (var slot in backupScript.slots)
+            {
+                SqlLiteDataAccess.AddSaveSlot(slot);
+            }
+        }
+
+        private void beginBackup_Click(object sender, RoutedEventArgs e)
+        {
+            backupScript.BeginBackup();
+        }
+
+        private void clearDestBox_Click_1(object sender, RoutedEventArgs e)
+        {
+            destinationBox.Text = "";
+        }
+
+        private void clearSourceBox_Click(object sender, RoutedEventArgs e)
+        {
+            sourceBox.Text = "";
         }
     }
 }

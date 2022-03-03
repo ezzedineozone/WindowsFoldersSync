@@ -1,5 +1,6 @@
 # BackupApplication
-BackupApplication (Made mostly for personal use) to sync up folders across my local machine, currently in very early alpha version, bugs and crashes are expected!
+This is my first ever application project, made Using c#, the wpf framework , and SQLite.
+BackupApplication (Made mostly for personal use, but decided to release it) to sync up folders across my local machine, currently in very early alpha version, bugs and crashes are expected!
 # How to use :
 -The first box represents the source folder, here you can click on the three dots to the right to select a folder to be your source, it could be anywhere on your pc!  
 -The second box represents the destination folder, here you can choose the folder that you want to sync up your source folder to! (Note: folder has to be empty)  
@@ -13,4 +14,9 @@ can manage them, they are represented by buttons, each button containing the num
 
 # Known issues
 -Chosing an empty folder as your destination will cause unintended behaviour, such as deleting the created destination folder.
+
+
+# Get the download links from the releases
+
+https://github.com/ezzedineozone/BackupApp/releases
 

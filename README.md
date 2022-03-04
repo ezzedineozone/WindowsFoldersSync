@@ -9,6 +9,8 @@ can manage them, they are represented by buttons, each button containing the num
 -Clicking on a slot will replace the textboxes's contents with their corresponding data from the slot itself.  
 -To modify a save slot, simply click on it from the scrollviewer, and change the source/destination.  
 -To delete a slot, simply choose the slot you want to delete, and clear out both the Source and the Detination text boxes using the "X" buttons.  
+![image](https://user-images.githubusercontent.com/29092330/156822178-530a2cb9-bc90-4098-a2f8-4e6cfb891202.png)
+
 
 
 

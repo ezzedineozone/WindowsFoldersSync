@@ -42,12 +42,6 @@ namespace WpfApp1
             {
                 Refresh();
             }
-            backupScript.BackupInitiatedEvent += BackupScript_BackupInitiatedEvent;
-        }
-
-        private void BackupScript_BackupInitiatedEvent(object? sender, string e)
-        {
-            lastBackup.Text = e;
         }
 
         private void submitButton_Click(object sender, RoutedEventArgs e)
@@ -72,6 +66,7 @@ namespace WpfApp1
                     Grid.SetRow(button, grid.RowDefinitions.Count - 1);
                     saveSlotViewer.Content = grid;
                     RefreshDB();
+                    Refresh();
                 }
                 else
                 {
@@ -90,14 +85,15 @@ namespace WpfApp1
             sourceBox.Text = tempSaveSlot.Source;
             destinationBox.Text = tempSaveSlot.Destination;
             submitButton.Content = "Save";
+            submitButton.Click -= SaveChanges;
             submitButton.Click -= submitButton_Click;
             submitButton.Click += SaveChanges;
         }
         private void SaveChanges (object sender, RoutedEventArgs e)
         {
-            if(sourceBox.Text == "" || destinationBox.Text == "")
+            if(sourceBox.Text.ToString() == "" || destinationBox.Text.ToString() == "")
             {
-                if(sourceBox.Text == "" && destinationBox.Text == "" )
+                if(sourceBox.Text.ToString() == "" && destinationBox.Text.ToString() == "" )
                 {
                     System.Windows.MessageBox.Show("Slot was deleted");
                     backupScript.slots.RemoveAt(Convert.ToInt32(tempBtn.Content) - 1);
@@ -128,7 +124,6 @@ namespace WpfApp1
                     destinationBox.Text = "";
                     submitButton.Click += submitButton_Click;
                     submitButton.Click -= SaveChanges;
-                    submitButton.Content = "Add";
                     Refresh();
                     RefreshDB();
                 }

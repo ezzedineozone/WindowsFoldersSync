@@ -10,7 +10,6 @@ namespace WpfApp1
 {
     internal class BackupScript
     {
-        public event EventHandler<string>? BackupInitiatedEvent;
         public List<SaveSlot> slots;
         public BackupScript()
         {
@@ -23,11 +22,10 @@ namespace WpfApp1
             saveSlot.Order = order;
             slots.Add(saveSlot);
         }
-        public void BeginBackup()
+        public void BeginBackupAsync()
         {
             DateTime dateTime = DateTime.Now;
             var formattedTime = dateTime.ToString().Split(' ')[0];
-            BackupInitiatedEvent?.Invoke(this, formattedTime);
             foreach (var slot in slots)
             {
                 var source = slot.Source;
@@ -48,7 +46,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show("One of the directories you have entered does not exist");
+                    MessageBox.Show($" SaveSlot number {slot.Order}'s destination or source dont exist. It was skipped");
                 }
             }
         }

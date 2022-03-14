@@ -203,9 +203,9 @@ namespace WpfApp1
             }
         }
 
-        private void beginBackup_Click(object sender, RoutedEventArgs e)
+        private async void beginBackup_Click(object sender, RoutedEventArgs e)
         {
-            backupScript.BeginBackup();
+            await Task.Run(() => backupScript.BeginBackupAsync());
         }
 
         private void clearDestBox_Click_1(object sender, RoutedEventArgs e)

@@ -174,9 +174,14 @@ namespace WpfApp1
         }
         private void ShowBrowser(object sender, RoutedEventArgs e)
         {
+            folderBrowserDialog.ShowNewFolderButton = true;
             folderBrowserDialog.ShowDialog();
             var selectedPath = folderBrowserDialog.SelectedPath;
             var btn = (System.Windows.Controls.Button)sender;
+            if(!Directory.Exists(selectedPath))
+            {
+                Directory.CreateDirectory(selectedPath);
+            }
             if(btn.Name == "sourceBrowser")
             {
                 sourceBox.Text = selectedPath ;

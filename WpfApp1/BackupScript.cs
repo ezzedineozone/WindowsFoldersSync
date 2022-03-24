@@ -54,6 +54,7 @@ namespace WpfApp1
         {
             var directories = new List<string>();
             var root = Directory.GetDirectories(source);
+            directories.Add(source);
             if(root.Length != 0)
             {
                 foreach(var directory in root)

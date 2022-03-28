@@ -53,7 +53,16 @@ namespace WpfApp1
             using(IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 string sqlGet = "select date from LastBackup";
-                return cnn.Query<string>(sqlGet).Single().ToString();
+                try
+                {
+                    return cnn.Query<string>(sqlGet).Single().ToString();
+                }
+                catch (Exception)
+                {
+
+                    return "No Last Backup date was found";
+                }
+                
             }
         }
         private static string LoadConnectionString(string id="default")

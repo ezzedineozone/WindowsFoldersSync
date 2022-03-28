@@ -156,6 +156,10 @@ namespace WpfApp1
                 Grid.SetRow(btn, grid.RowDefinitions.Count - 1);
             }
             saveSlotViewer.Content = grid;
+            if(SqlLiteDataAccess.GetLastDate() != null)
+            {
+                backupStatus.Text = SqlLiteDataAccess.GetLastDate();
+            }
         }
         private bool CheckIfEligible(string destination)
         {
@@ -206,11 +210,14 @@ namespace WpfApp1
             {
                 SqlLiteDataAccess.AddSaveSlot(slot);
             }
+            
         }
 
         private async void beginBackup_Click(object sender, RoutedEventArgs e)
         {
             await Task.Run(() => backupScript.BeginBackupAsync());
+            SqlLiteDataAccess.ChangeLastDate(DateTime.Now.ToString());
+            backupStatus.Text = SqlLiteDataAccess.GetLastDate();
         }
 
         private void clearDestBox_Click_1(object sender, RoutedEventArgs e)

@@ -36,9 +36,8 @@
         <TextBox IsReadOnly="True" x:Name="destinationBox" Grid.Column="1" Grid.Row="4"  Grid.ColumnSpan="4" Height="40" Margin="0,0,54,0" MaxWidth="270" />
         <Button x:Name="destinationBrowser" Content="..." Grid.Column="1" Grid.Row="4" Margin="260,0,45,0" Click="ShowBrowser"/>
         <Button x:Name="clearDestBox" Content="X" Grid.Column="1" Grid.Row="4" Margin="300,0,0,0" Click="clearDestBox_Click_1"/>
-        <TextBlock  Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <TextBlock HorizontalAlignment="Center" x:Name="backupStatus" FontWeight="Bold" Text=""/>
-        </TextBlock>
+        <TextBlock Grid.Row="5" HorizontalAlignment="left" Grid.Column="1" VerticalAlignment="Bottom" Margin="30,30,0,0" FontSize="16" Text="LastBackup:"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="left" Text="No Last Backup date was found" FontSize="14" Margin="115,30,0,0" x:Name="backupStatus" FontWeight="Bold"/>
         <Button x:Name="submitButton" Grid.Column="1" Grid.Row="5" Content="Add" Margin="20,40,130,30" Click="submitButton_Click" />
         <Button x:Name="beginBackup" Grid.Column="1" Grid.Row="5" Margin="220,40,37,30" Content=" Backup " Click="beginBackup_Click"/>
         <Border BorderBrush="LightGray" BorderThickness="3" Margin="10,10,0,10" Grid.Column="5" Grid.Row="1" Grid.RowSpan="5">

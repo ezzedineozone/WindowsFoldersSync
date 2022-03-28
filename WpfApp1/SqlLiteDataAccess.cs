@@ -37,6 +37,25 @@ namespace WpfApp1
                 cnn.Execute("delete from SaveSlot");
             }
         }
+        public static void ChangeLastDate(string date)
+        {
+            using(IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                string sqlDel = "delete from LastBackup";
+                cnn.Execute(sqlDel);
+                string sqlInsert = "insert into LastBackup (date) values (@date)";
+                cnn.Execute(sqlInsert, new {@date = date});
+            }
+
+        }
+        public static string GetLastDate()
+        {
+            using(IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                string sqlGet = "select date from LastBackup";
+                return cnn.Query<string>(sqlGet).Single().ToString();
+            }
+        }
         private static string LoadConnectionString(string id="default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;

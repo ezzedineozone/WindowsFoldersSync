@@ -14,8 +14,9 @@ can manage them, they are represented by buttons, each button containing the num
 
 
 
-# Known issues
--Chosing an empty folder as your destination will cause unintended behaviour, such as deleting the created destination folder.
+# Future plans
+-Create a loading sign that will run as long as the backup process is operating
+-a more compact UI
 
 
 # Get the download links from the releases

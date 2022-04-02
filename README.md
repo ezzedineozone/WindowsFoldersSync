@@ -15,7 +15,7 @@ can manage them, they are represented by buttons, each button containing the num
 
 
 # Future plans
--Create a loading sign that will run as long as the backup process is operating
+-Create a loading sign that will run as long as the backup process is operating  
 -a more compact UI
 
 

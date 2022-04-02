@@ -34,7 +34,7 @@ namespace WpfApp1
                 {
                     Directory.Delete(destination, true);
                     var directories = GetDirectories(source);
-                    var files = GetFiles(directories);
+                    var files = GetFiles(directories, source);
                     foreach (var dir in directories)
                     {
                         Directory.CreateDirectory($@"{destination}\{dir.Substring(source.Length)}");
@@ -54,7 +54,6 @@ namespace WpfApp1
         {
             var directories = new List<string>();
             var root = Directory.GetDirectories(source);
-            directories.Add(source);
             if(root.Length != 0)
             {
                 foreach(var directory in root)
@@ -68,8 +67,9 @@ namespace WpfApp1
             }
             return directories;
         }
-        public List<string> GetFiles(List<string> directories)
+        public List<string> GetFiles(List<string> directories,string source)
         {
+            directories.Add(source);
             var files = new List<string>();
             foreach (var dir in directories)
             {

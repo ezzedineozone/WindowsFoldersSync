@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.UI.Xaml.Media.Animation;
 
 namespace WpfApp1
 {

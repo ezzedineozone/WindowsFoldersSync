@@ -22,14 +22,14 @@ namespace WpfApp1
             saveSlot.Order = order;
             slots.Add(saveSlot);
         }
-        public void BeginBackupAsync()
+        public void BeginBackupAsync(IProgress<int> progress)
         {
             DateTime dateTime = DateTime.Now;
             var formattedTime = dateTime.ToString().Split(' ')[0];
-            foreach (var slot in slots)
+            for (int i = 1; i <= slots.Count; i++)
             {
-                var source = slot.Source;
-                var destination = slot.Destination;
+                var source = slots[i - 1].Source;
+                var destination = slots[i - 1].Destination;
                 if(Directory.Exists(source) && Directory.Exists(destination))
                 {
                     Directory.Delete(destination, true);
@@ -46,8 +46,9 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show($" SaveSlot number {slot.Order}'s destination or source dont exist. It was skipped");
+                    MessageBox.Show($" SaveSlot number {slots[i - 1].Order}'s destination or source dont exist. It was skipped");
                 }
+                progress.Report((i * 100) / slots.Count);
             }
         }
         public List<string> GetDirectories(string source)

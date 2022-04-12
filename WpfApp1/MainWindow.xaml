@@ -39,19 +39,21 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Source folder:" Grid.Column="1" Grid.Row="1" FontSize="20" Margin="0,20,0,20"/>
-        <TextBox IsReadOnly="True" x:Name="sourceBox" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" Height="40" Margin="0,10,54,0" MaxWidth="270" FontSize="24"/>
+        <TextBox IsReadOnly="True" x:Name="sourceBox" Grid.Column="1" Grid.Row="2"  Height="40" Margin="0,10,86,0" Width="251.833" MaxWidth="251.833" FontSize="18"/>
         <Button x:Name="sourceBrowser" Content="..." Grid.Column="1" Grid.Row="2" Margin="250,10,45,0" Click="ShowBrowser"/>
         <Button Style="{StaticResource ClearButton}" x:Name="clearSourceBox" Content="X" Grid.Column="1" Grid.Row="2" Click="clearSourceBox_Click"/>
         <TextBlock FontSize="20" Grid.Column="1" Grid.Row="3" Text="Destination (backups) folder:" Margin="0,20,0,20"/>
-        <TextBox IsReadOnly="True" x:Name="destinationBox" Grid.Column="1" Grid.Row="4"  Grid.ColumnSpan="4" Height="40" Margin="0,10,54,0" MaxWidth="270" />
+        <TextBox VerticalContentAlignment="Center" FontSize="18" IsReadOnly="True" x:Name="destinationBox" Grid.Column="1" Grid.Row="4"  Grid.ColumnSpan="4" Height="40" Margin="0,10,84,0" MaxWidth="251" MaxHeight="40"/>
         <Button x:Name="destinationBrowser" Content="..." Grid.Column="1" Grid.Row="4" Margin="250,10,45,0" Click="ShowBrowser"/>
         <Button Style="{StaticResource ClearButton}" x:Name="clearDestBox" Content="X" Grid.Column="1" Grid.Row="4"  Click="clearDestBox_Click_1"/>
-        <TextBlock Grid.Row="5" HorizontalAlignment="left" Grid.Column="1" VerticalAlignment="Bottom" Margin="40,30,0,0" FontSize="16" Text="LastBackup:"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="left" Text="No Last Backup date was found" FontSize="14" Margin="125,30,0,0" x:Name="backupStatus" FontWeight="Bold"/>
+        <TextBlock Grid.Row="5" HorizontalAlignment="left" Grid.Column="1" VerticalAlignment="Bottom" Margin="20,30,0,6" FontSize="16" Text="LastBackup:"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="left" Text="No Last Backup date was found" FontSize="14" Margin="105,30,0,6" x:Name="backupStatus" FontWeight="Bold"/>
         <Button x:Name="submitButton" Grid.Column="1" Grid.Row="5" Content="Add" Margin="20,40,130,30" Click="submitButton_Click" />
         <Button x:Name="beginBackup" Grid.Column="1" Grid.Row="5" Margin="220,40,37,30" Content=" Backup " Click="beginBackup_Click"/>
         <Border BorderBrush="LightGray" BorderThickness="3" Margin="10,10,0,10" Grid.Column="5" Grid.Row="1" Grid.RowSpan="5">
             <ScrollViewer x:Name="saveSlotViewer"/>
         </Border>
+        <ProgressBar Grid.Column="1" Grid.Row="6" Margin="2,0,0,5" x:Name="progressBar"/>
+        <TextBlock x:Name="backupProg" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Text="No current Backup process in progress" FontSize="14" Foreground="DarkGray"></TextBlock>
     </Grid>
 </Window>

@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
-using System.Windows.UI.Xaml.Media.Animation;
 
 namespace WpfApp1
 {
@@ -216,7 +215,11 @@ namespace WpfApp1
 
         private async void beginBackup_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() => backupScript.BeginBackupAsync());
+            backupProg.FontWeight = FontWeights.Bold;
+            backupProg.Foreground = new SolidColorBrush(Colors.Black);
+            backupProg.Text = "Backup in progress...";
+            var progress = new Progress<int>((value) => ProgressBarState(value));
+            await Task.Run(() => backupScript.BeginBackupAsync(progress));
             SqlLiteDataAccess.ChangeLastDate(DateTime.Now.ToString());
             backupStatus.Text = SqlLiteDataAccess.GetLastDate();
         }
@@ -229,6 +232,21 @@ namespace WpfApp1
         private void clearSourceBox_Click(object sender, RoutedEventArgs e)
         {
             sourceBox.Text = "";
+        }
+        private void ProgressBarState(int value)
+        {
+            if(value == 100)
+            {
+                progressBar.Value = 0;
+                System.Windows.MessageBox.Show("Backup finished Succesfully");
+                backupProg.Text = "No backup process in progress";
+                backupProg.Foreground = new SolidColorBrush(Colors.DarkGray);
+                backupProg.FontWeight = FontWeights.Normal;
+            }
+            else
+            {
+                progressBar.Value = value;
+            }
         }
     }
 }

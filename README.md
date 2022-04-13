@@ -9,14 +9,17 @@ can manage them, they are represented by buttons, each button containing the num
 -Clicking on a slot will replace the textboxes's contents with their corresponding data from the slot itself.  
 -To modify a save slot, simply click on it from the scrollviewer, and change the source/destination.  
 -To delete a slot, simply choose the slot you want to delete, and clear out both the Source and the Detination text boxes using the "X" buttons.  
-![image](https://user-images.githubusercontent.com/29092330/156822178-530a2cb9-bc90-4098-a2f8-4e6cfb891202.png)
+
+![image](https://user-images.githubusercontent.com/29092330/163240720-75f67c63-08b5-4dc9-8e5c-69f706cd3bd2.png)
+
 
 
 
 
 # Future plans
--Create a loading sign that will run as long as the backup process is operating  
--a more compact UI
+-Automated Runs:
+one of the future plans is to give the user the ability to set a date and time and frequency for backups to run automatically.
+(do not expect any updates soon as of the date of writing this (4/13/2022) as im moving on to other projects but will occasionally come back to this if bugs are discovered)
 
 
 # Get the download links from the releases

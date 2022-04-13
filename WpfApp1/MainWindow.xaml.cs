@@ -178,29 +178,41 @@ namespace WpfApp1
         }
         private void ShowBrowser(object sender, RoutedEventArgs e)
         {
+            var sourcetempText = sourceBox.Text.ToString();
+            var destinationtempText = destinationBox.Text.ToString();
             folderBrowserDialog.ShowNewFolderButton = true;
-            folderBrowserDialog.ShowDialog();
-            var selectedPath = folderBrowserDialog.SelectedPath;
-            var btn = (System.Windows.Controls.Button)sender;
-            if(!Directory.Exists(selectedPath))
+            var browserdialog = folderBrowserDialog.ShowDialog();
+            if(browserdialog == System.Windows.Forms.DialogResult.OK)
             {
-                Directory.CreateDirectory(selectedPath);
-            }
-            if(btn.Name == "sourceBrowser")
-            {
-                sourceBox.Text = selectedPath ;
-            }
-            else
-            {
-                if (Directory.GetDirectories(selectedPath).Count() == 0 && Directory.GetFiles(selectedPath).Count() == 0 )
+                var selectedPath = folderBrowserDialog.SelectedPath;
+                var btn = (System.Windows.Controls.Button)sender;
+                if (!Directory.Exists(selectedPath))
                 {
-                    destinationBox.Text = folderBrowserDialog.SelectedPath;
+                    Directory.CreateDirectory(selectedPath);
+                }
+                if (btn.Name == "sourceBrowser")
+                {
+                    sourceBox.Text = selectedPath;
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("Your destination folder is not empty, please select an empty folder");
+                    if (Directory.GetDirectories(selectedPath).Count() == 0 && Directory.GetFiles(selectedPath).Count() == 0)
+                    {
+                        destinationBox.Text = folderBrowserDialog.SelectedPath;
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Your destination folder is not empty, please select an empty folder");
+                    }
                 }
             }
+            else
+            {
+                sourceBox.Text = sourcetempText;
+                destinationBox.Text = destinationtempText;
+                System.Windows.Forms.MessageBox.Show("You didnt select a folder!");
+            }
+
         }
         private void RefreshDB()
         {

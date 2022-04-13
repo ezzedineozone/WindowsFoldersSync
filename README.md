@@ -28,5 +28,5 @@ one of the future plans is to give the user the ability to set a date and time a
 
 # Get the download links from the releases
 
-https://github.com/ezzedineozone/BackupApp/releases
+https://github.com/ezzedineozone/WindowsFoldersSync/releases
 

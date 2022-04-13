@@ -1,6 +1,6 @@
 # Windows Folders Sync Application
 This is my first ever application project, made Using c#, the wpf framework , and SQLite.
-BackupApplication (Made mostly for personal use, but decided to release it) to sync up folders across my local machine, currently in very early alpha version, bugs and crashes are expected!
+BackupApplication (Made mostly for personal use, but decided to release it) to sync up folders across my local machine.
 # How to use :
 -The first box represents the source folder, here you can click on the three dots to the right to select a folder to be your source, it could be anywhere on your pc!  
 -The second box represents the destination folder, here you can choose the folder that you want to sync up your source folder to! (Note: folder has to be empty)  
@@ -8,7 +8,11 @@ BackupApplication (Made mostly for personal use, but decided to release it) to s
 can manage them, they are represented by buttons, each button containing the number of the order the slots were added in.  
 -Clicking on a slot will replace the textboxes's contents with their corresponding data from the slot itself.  
 -To modify a save slot, simply click on it from the scrollviewer, and change the source/destination.  
--To delete a slot, simply choose the slot you want to delete, and clear out both the Source and the Detination text boxes using the "X" buttons.  
+-To delete a slot, simply choose the slot you want to delete, and clear out both the Source and the Detination text boxes using the "X" buttons.
+# Notes: 
+- Please do not exit the application while the sync progress is running, it is indicated by the text right below the destination folder box.
+
+# Preview: 
 
 ![image](https://user-images.githubusercontent.com/29092330/163240720-75f67c63-08b5-4dc9-8e5c-69f706cd3bd2.png)
 

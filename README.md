@@ -1,4 +1,4 @@
-# BackupApplication
+# Windows Folders Sync Application
 This is my first ever application project, made Using c#, the wpf framework , and SQLite.
 BackupApplication (Made mostly for personal use, but decided to release it) to sync up folders across my local machine, currently in very early alpha version, bugs and crashes are expected!
 # How to use :
